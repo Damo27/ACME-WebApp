@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ACME_WebApp.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    
+    ACME_WebApp.Models.User user = null;
+    if (Session["user"] != null)
+    {
+        user = (ACME_WebApp.Models.User)Session["user"];
+    }
+ 
+}
+
+<h2>Shopping</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(model => model.First().ProductCategory, "Category:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Category", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(model => model.First().ProductCategory, "Search Category:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("Search", null, new { @class = "form-control", placeholder = "Search" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div id="target">
+            <div style="max-width:300px">
+                <img src="~/Content/Images/@Model.FirstOrDefault().ProductCategory.cat_imgUrl" alt="No image selected" class="img-circle" style="max-width:100%;height:auto;width:auto\9;" />
+            </div>
+            
+            @foreach (var item in Model)
+            {
+                <div class="gallery">
+                    <div style="height:180px">
+                        <img src="~/Content/Images/@item.prod_imgUrl" alt="No image selected" />
+                    </div>
+                    <div style="padding: 10px 10px 10px 10px;">
+                        <div style="height:110px;">
+                            <h4>@item.prod_name</h4>
+                            <h6>@item.prod_description</h6>
+                        </div>
+                        <div>
+                            <h5>Price:          R @item.prod_price.ToString("0.00")</h5>
+                        </div>
+                    </div>
+                    <div>
+                        @if (user == null)
+                        {
+                            @Html.ActionLink("Login to Buy", "Login", "Home", new { id = item.product_ID }, null)
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Buy", "Create", "Purchases", new { id = item.product_ID }, null)
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@*Scripts provide functionality to drop area and repopulation of target div when department combobox selection changes.*@
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("#Category").change(function ()
+            {
+                $("#log").ajaxError(function (event, jqxhr, settings, exception)
+                {
+                    alert(exception);
+                });
+
+                var searchString = document.getElementById("Search").value;
+                var catSelected = $("#Category :selected").first().val();
+                $.get('@Url.Action("ProductsByCategory")', { id: catSelected }, function (data)
+                {
+                    $("#target").html(data);
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("#Search").keydown(function ()
+            {
+                $("#log").ajaxError(function (event, jqxhr, settings, exception)
+                {
+                    alert(exception);
+                });
+
+                var searchString = document.getElementById("Search").value;
+                var catSelected = $("#Category :selected").first().val();
+                $.get('@Url.Action("ProductsByCategory")', { id: catSelected, search: searchString}, function (data)
+                {
+                    $("#target").html(data);
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,39 @@
+﻿@model ACME_WebApp.Models.User
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Login_Layout.cshtml";
+}
+
+<div id="login">
+    @using (Html.BeginForm("AuthoriseLogin", "Home", FormMethod.Post))
+    {
+        @Html.Hidden("id", (Guid?)ViewBag.ID)
+        <table style="display:inline-table;">
+            <tr>
+                <td>
+                    @Html.EditorFor(model => model.user_Name, new { htmlAttributes = new { required = "True", @class = "form-control", placeholder = "Username" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.EditorFor(model => model.user_Password, new { htmlAttributes = new { required = "True", @class = "form-control", placeholder = "Password" } })
+                </td>
+            </tr>
+            <tr>
+                <td style="color:red;">
+                    @Html.DisplayFor(model => model.ErrorMessage)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" name="name" value="Login" />
+                    <input type="reset" name="name" value="Clear" />
+                </td>
+            </tr>
+        </table>
+    }
+    <div>
+        @Html.ActionLink("Register", "Create", "Users")
+    </div>
+</div>

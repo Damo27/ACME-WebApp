@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ACME_WebApp.Models.ProductCategory>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron" style="margin-top:10px; background:white">
+    <img src="~/Content/Images/acme.png" style="max-width:100%; max-height:100%"/>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div style="max-width:300px">
+                <img src="~/Content/Images/@item.cat_imgUrl" alt="No image selected" class="img-circle" style="max-width:100%;height:auto;width:auto\9;" />
+            </div>
+            <p><a class="btn btn-default" href=@Url.Action("Index","Products", new { id = item.category_ID})>Shop @item.cat_name</a></p>
+        </div>
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@model ACME_WebApp.Models.ProductCategory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProductCategory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cat_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cat_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cat_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cat_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cat_imgUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cat_imgUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.category_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

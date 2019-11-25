@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ACME_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_ID" />
+          </Key>
+          <Property Name="product_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="prod_name" Type="nvarchar" MaxLength="55" />
+          <Property Name="prod_description" Type="nvarchar" MaxLength="255" />
+          <Property Name="prod_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="prod_imgUrl" Type="nvarchar" MaxLength="55" Nullable="false" />
+          <Property Name="category_ID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="category_ID" />
+          </Key>
+          <Property Name="category_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="cat_name" Type="nvarchar" MaxLength="55" />
+          <Property Name="cat_description" Type="nvarchar" MaxLength="255" />
+          <Property Name="cat_imgUrl" Type="nvarchar" MaxLength="55" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="purchase_ID" />
+          </Key>
+          <Property Name="purchase_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="product_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_ID" />
+          </Key>
+          <Property Name="user_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_Name" Type="nvarchar" MaxLength="55" />
+          <Property Name="user_Email" Type="nvarchar" MaxLength="55" Nullable="false" />
+          <Property Name="user_Password" Type="nvarchar" MaxLength="55" Nullable="false" />
+          <Property Name="isEmployee" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Product__categor__3E52440B">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="category_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="category_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__produc__47DBAE45">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_ID" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__user_I__48CFD27E">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_ID" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ACME_DBModelStoreContainer">
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Product__categor__3E52440B" Association="Self.FK__Product__categor__3E52440B">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__produc__47DBAE45" Association="Self.FK__Purchase__produc__47DBAE45">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__user_I__48CFD27E" Association="Self.FK__Purchase__user_I__48CFD27E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ACME_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_ID" />
+          </Key>
+          <Property Name="product_ID" Type="Guid" Nullable="false" />
+          <Property Name="prod_name" Type="String" MaxLength="55" FixedLength="false" Unicode="true" />
+          <Property Name="prod_description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="prod_price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="prod_imgUrl" Type="String" MaxLength="55" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_ID" Type="Guid" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK__Product__categor__3E52440B" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="Purchases" Relationship="Self.FK__Purchase__produc__4316F928" FromRole="Product" ToRole="Purchase" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="category_ID" />
+          </Key>
+          <Property Name="category_ID" Type="Guid" Nullable="false" />
+          <Property Name="cat_name" Type="String" MaxLength="55" FixedLength="false" Unicode="true" />
+          <Property Name="cat_description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cat_imgUrl" Type="String" MaxLength="55" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__categor__3E52440B" FromRole="ProductCategory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="purchase_ID" />
+          </Key>
+          <Property Name="purchase_ID" Type="Guid" Nullable="false" />
+          <Property Name="user_ID" Type="Guid" Nullable="false" />
+          <Property Name="product_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Purchase__produc__4316F928" FromRole="Purchase" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Purchase__user_I__4222D4EF" FromRole="Purchase" ToRole="Users" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_ID" />
+          </Key>
+          <Property Name="user_ID" Type="Guid" Nullable="false" />
+          <Property Name="user_Name" Type="String" MaxLength="55" FixedLength="false" Unicode="true" />
+          <Property Name="user_Email" Type="String" MaxLength="55" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_Password" Type="String" MaxLength="55" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isEmployee" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Purchases" Relationship="Self.FK__Purchase__user_I__4222D4EF" FromRole="Users" ToRole="Purchase" />
+        </EntityType>
+        <Association Name="FK__Product__categor__3E52440B">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="category_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="category_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__produc__4316F928">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_ID" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__user_I__4222D4EF">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_ID" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ACME_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+          <EntitySet Name="Purchases" EntityType="Self.Purchase" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Product__categor__3E52440B" Association="Self.FK__Product__categor__3E52440B">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__produc__4316F928" Association="Self.FK__Purchase__produc__4316F928">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__user_I__4222D4EF" Association="Self.FK__Purchase__user_I__4222D4EF">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ACME_DBModelStoreContainer" CdmEntityContainer="ACME_DBEntities">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ACME_DBModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="product_ID" ColumnName="product_ID" />
+                <ScalarProperty Name="prod_name" ColumnName="prod_name" />
+                <ScalarProperty Name="prod_description" ColumnName="prod_description" />
+                <ScalarProperty Name="prod_price" ColumnName="prod_price" />
+                <ScalarProperty Name="prod_imgUrl" ColumnName="prod_imgUrl" />
+                <ScalarProperty Name="category_ID" ColumnName="category_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="ACME_DBModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="category_ID" ColumnName="category_ID" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+                <ScalarProperty Name="cat_description" ColumnName="cat_description" />
+                <ScalarProperty Name="cat_imgUrl" ColumnName="cat_imgUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purchases">
+            <EntityTypeMapping TypeName="ACME_DBModel.Purchase">
+              <MappingFragment StoreEntitySet="Purchase">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="purchase_ID" ColumnName="purchase_ID" />
+                <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+                <ScalarProperty Name="product_ID" ColumnName="product_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ACME_DBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+                <ScalarProperty Name="user_Name" ColumnName="user_Name" />
+                <ScalarProperty Name="user_Email" ColumnName="user_Email" />
+                <ScalarProperty Name="user_Password" ColumnName="user_Password" />
+                <ScalarProperty Name="isEmployee" ColumnName="isEmployee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

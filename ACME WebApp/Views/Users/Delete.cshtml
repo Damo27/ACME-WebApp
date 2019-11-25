@@ -1,0 +1,56 @@
+﻿@model ACME_WebApp.Models.User
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.user_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user_Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isEmployee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isEmployee)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
